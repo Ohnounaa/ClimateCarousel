@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ohnouna.climatecarouselapp.data.DailyWeatherInfo
-import com.ohnouna.climatecarouselapp.databinding.ViewHolderBinding
+import com.ohnouna.climatecarouselapp.databinding.WeatherViewHolderBinding
 import kotlinx.android.synthetic.main.main_fragment.view.*
 
 class MultiDayWeatherForecastFragment: Fragment() {
@@ -30,13 +30,7 @@ class MultiDayWeatherForecastFragment: Fragment() {
 
         val binding:ViewDataBinding = DataBindingUtil.inflate(inflater, R.layout.main_fragment, container, false)
         fragmentLayout = binding.root
-        fragmentLayout.daily_weather_data_collection.apply{
-            run {
-                layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-                adapter = WeatherAdapter(weatherDataViewModel.getWeather().value)
-            }
 
-        }
 
         return fragmentLayout;
     }
@@ -45,7 +39,17 @@ class MultiDayWeatherForecastFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         weatherDataViewModel.getWeather().observe(
             viewLifecycleOwner,
-            { writeWeatherDataToDatabase() }
+            { weatherInfo ->
+                writeWeatherDataToDatabase()
+                fragmentLayout.daily_weather_data_collection.apply{
+                    run {
+                        layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+                        adapter = WeatherAdapter(weatherInfo)
+                    }
+
+                }
+
+            }
         )
     }
     private fun writeWeatherDataToDatabase() { weatherDataViewModel.addWeatherToDatabase() }
@@ -54,11 +58,11 @@ class MultiDayWeatherForecastFragment: Fragment() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherViewHolder {
             val binding = DataBindingUtil.inflate<ViewDataBinding>(
                 layoutInflater,
-                R.layout.view_holder,
+                R.layout.weather_view_holder,
                 parent,
                 false
             )
-            return WeatherViewHolder(binding as ViewHolderBinding)
+            return WeatherViewHolder(binding as WeatherViewHolderBinding)
         }
 
         override fun onBindViewHolder(holder: WeatherViewHolder, position: Int) {
@@ -74,8 +78,7 @@ class MultiDayWeatherForecastFragment: Fragment() {
 
     }
 
-
-   private inner class WeatherViewHolder(private val binding: ViewHolderBinding):
+   private inner class WeatherViewHolder(private val binding: WeatherViewHolderBinding):
        RecyclerView.ViewHolder(binding.root) {
 
            init{
@@ -85,7 +88,6 @@ class MultiDayWeatherForecastFragment: Fragment() {
        fun bind(weatherDay: DailyWeatherInfo) {
            binding.apply {
                viewModel?.dailyWeather = weatherDay
-               executePendingBindings()
            }
        }
 
