@@ -1,6 +1,7 @@
 package com.ohnouna.climatecarouselapp
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.room.Room
 import com.ohnouna.climatecarouselapp.data.DailyWeatherInfo
@@ -20,8 +21,8 @@ class WeatherDataRepository private constructor(context: Context){
 
     private val weatherDao = database.dailyWeatherDao()
 
-    fun getAllWeatherInfo(): List<DailyWeatherInfo> = weatherDao.getAllWeatherInfo();
-    fun getSingleDayWeatherInfo(dt:Int): DailyWeatherInfo = weatherDao.getSingleDayWeatherInfo(dt);
+    fun getAllWeatherInfo(): LiveData<List<DailyWeatherInfo>> = weatherDao.getAllWeatherInfo();
+    fun getSingleDayWeatherInfo(dt:Int): LiveData<DailyWeatherInfo> = weatherDao.getSingleDayWeatherInfo(dt);
 
     fun insertWeatherInfo(dwi:DailyWeatherInfo) = weatherDao.insertWeatherDay(dwi)
 

@@ -73,7 +73,7 @@ class WeatherTypeConverters {
     @TypeConverter
     fun fromStringToWeatherResponseList(weatherResponseAsString: String): MutableList<WeatherResponse?> {
         val arrayList = weatherResponseAsString.split(",", ignoreCase = true, limit = 0)
-        val w = WeatherResponse(arrayList[0], arrayList[1], arrayList[2].toInt(), arrayList[3])
+        val w = WeatherResponse(arrayList[0], arrayList[1], arrayList[2].trim().toInt(), arrayList[3])
         val list:MutableList<WeatherResponse?> = mutableListOf()
         list.add(w)
         return list;

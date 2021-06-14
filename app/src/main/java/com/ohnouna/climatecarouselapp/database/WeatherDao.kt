@@ -13,12 +13,12 @@ import com.ohnouna.climatecarouselapp.data.WeatherResponse
 @Dao
 interface WeatherDao{
     @Query("SELECT * FROM DailyWeatherInfo")
-    fun getAllWeatherInfo(): List<DailyWeatherInfo>
+    fun getAllWeatherInfo(): LiveData<List<DailyWeatherInfo>>
 
     @Query("SELECT * FROM DailyWeatherInfo WHERE dt=(:dt)")
-    fun getSingleDayWeatherInfo(dt:Int):DailyWeatherInfo
-
+    fun getSingleDayWeatherInfo(dt:Int):LiveData<DailyWeatherInfo>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertWeatherDay(dwi:DailyWeatherInfo)
-}
+
+    }

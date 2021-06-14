@@ -3,11 +3,10 @@ package com.ohnouna.climatecarouselapp
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.ohnouna.climatecarouselapp.data.DailyWeatherInfo
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class WeatherDataViewModel: ViewModel() {
 
@@ -15,6 +14,8 @@ class WeatherDataViewModel: ViewModel() {
     private val repository = WeatherDataRepository.retrieve()
 
     private val weather: MutableLiveData<List<DailyWeatherInfo>> = loadWeather()
+    private val viewModelJob = SupervisorJob()
+    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     fun getWeather():LiveData<List<DailyWeatherInfo>> {
         return weather
@@ -24,9 +25,11 @@ class WeatherDataViewModel: ViewModel() {
            return repository.getWeatherDataFromAPI()
     }
 
-    fun addWeatherToDatabase() {
-            for(item in weather.value!!) {
-                repository.insertWeatherInfo(item)
-            }
+  fun addWeatherToDatabase() {
+      uiScope.launch(Dispatchers.IO) {
+          for(item in weather.value!!) {
+              repository.insertWeatherInfo(item)
+          }
+      }
     }
 }
