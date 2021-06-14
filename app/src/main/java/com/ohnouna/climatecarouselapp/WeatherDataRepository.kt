@@ -4,21 +4,12 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.room.Room
 import com.ohnouna.climatecarouselapp.data.DailyWeatherInfo
-import com.ohnouna.climatecarouselapp.data.FeelsLike
-import com.ohnouna.climatecarouselapp.data.Temp
-import com.ohnouna.climatecarouselapp.data.WeatherResponse
 import com.ohnouna.climatecarouselapp.database.WeatherDatabase
 
 class WeatherDataRepository private constructor(context: Context){
 
-    fun getWeatherDataFromAPI() : MutableLiveData<List<DailyWeatherInfo>> {
-       val data = WeatherDataRetriever().retrieveWeatherData()
-       if(data.value!= null) {
-           for(item in data.value!!) {
-               insertWeatherInfo(item)
-           }
-       }
-        return data;
+    fun getWeatherDataFromAPI(): MutableLiveData<List<DailyWeatherInfo>> {
+        return WeatherDataRetriever().retrieveWeatherData();
     }
 
 
@@ -31,8 +22,8 @@ class WeatherDataRepository private constructor(context: Context){
 
     fun getAllWeatherInfo(): List<DailyWeatherInfo> = weatherDao.getAllWeatherInfo();
     fun getSingleDayWeatherInfo(dt:Int): DailyWeatherInfo = weatherDao.getSingleDayWeatherInfo(dt);
-    fun insertWeatherInfo(dwi:DailyWeatherInfo
-                          ) = weatherDao.insertWeatherDay(dwi)
+
+    fun insertWeatherInfo(dwi:DailyWeatherInfo) = weatherDao.insertWeatherDay(dwi)
 
 
     companion object{

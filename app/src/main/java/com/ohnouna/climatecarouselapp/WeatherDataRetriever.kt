@@ -4,11 +4,15 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.ohnouna.climatecarouselapp.data.DailyWeatherInfo
 import com.ohnouna.climatecarouselapp.data.WeatherData
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 
 class WeatherDataRetriever {
 
@@ -45,5 +49,19 @@ class WeatherDataRetriever {
         })
         return responseLiveDataDaily
     }
+
+
+    fun coroutineTest() {
+            val states = arrayOf("Starting", "Doing Task 1", "Doing Task 2", "Ending")
+            repeat(3) {
+                GlobalScope.launch{
+                    println("${Thread.currentThread()} has started")
+                    for (i in states) {
+                        println("${Thread.currentThread()} - $i")
+                        delay(5000)
+                    }
+                }
+            }
+        }
 
 }

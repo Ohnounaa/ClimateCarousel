@@ -20,5 +20,5 @@ interface WeatherDao{
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertWeatherDay(dwi: DailyWeatherInfo)
+    fun insertWeatherDay(dwi:DailyWeatherInfo)
 }

@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MultiDayWeatherForecastFragment: Fragment() {
 
@@ -34,8 +37,15 @@ class MultiDayWeatherForecastFragment: Fragment() {
         weatherDataViewModel.getWeather().observe(
             viewLifecycleOwner,
             { weatherInfo ->
-                Log.d("ALIZA", weatherInfo.size.toString())
+                //TODO maybe the scope should be smaller
+               GlobalScope.launch {add()}
             },
         )
+    }
+
+
+    private fun add() {
+
+        weatherDataViewModel.addWeatherToDatabase()
     }
 }
