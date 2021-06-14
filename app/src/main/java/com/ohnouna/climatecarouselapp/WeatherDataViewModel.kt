@@ -7,29 +7,18 @@ import com.ohnouna.climatecarouselapp.data.DailyWeatherInfo
 
 class WeatherDataViewModel: ViewModel() {
 
-    private val weather: MutableLiveData<List<DailyWeatherInfo>> by lazy {
-        MutableLiveData<List<DailyWeatherInfo>>().also{
-            loadWeather()
-        }
-    }
+    private val repo = WeatherDataRepository.retrieve()
 
-
-    val repo = WeatherDataRepository.retrieve()
-    val d: List<DailyWeatherInfo> = repo.getAllWeatherInfo()
+    private val weather: MutableLiveData<List<DailyWeatherInfo>> = loadWeather()
 
     fun getWeather():LiveData<List<DailyWeatherInfo>> {
         return weather
     }
 
 
-    private fun loadWeather() {
-        //TODO add coroutine
-        WeatherDataRetriever().retrieveWeatherData()
-        addWeatherToRoomDatabase()
+    private fun loadWeather(): MutableLiveData<List<DailyWeatherInfo>> {
+
+
+        return repo.getWeatherDataFromAPI()
     }
-
-    private fun addWeatherToRoomDatabase() {
-
-    }
-
 }

@@ -1,6 +1,7 @@
 package com.ohnouna.climatecarouselapp
 
 import android.content.Context
+import androidx.lifecycle.MutableLiveData
 import androidx.room.Room
 import com.ohnouna.climatecarouselapp.data.DailyWeatherInfo
 import com.ohnouna.climatecarouselapp.data.FeelsLike
@@ -9,6 +10,17 @@ import com.ohnouna.climatecarouselapp.data.WeatherResponse
 import com.ohnouna.climatecarouselapp.database.WeatherDatabase
 
 class WeatherDataRepository private constructor(context: Context){
+
+    fun getWeatherDataFromAPI() : MutableLiveData<List<DailyWeatherInfo>> {
+       val data = WeatherDataRetriever().retrieveWeatherData()
+       if(data.value!= null) {
+           for(item in data.value!!) {
+               insertWeatherInfo(item)
+           }
+       }
+        return data;
+    }
+
 
     private val database: WeatherDatabase = Room.databaseBuilder(
         context.applicationContext,
