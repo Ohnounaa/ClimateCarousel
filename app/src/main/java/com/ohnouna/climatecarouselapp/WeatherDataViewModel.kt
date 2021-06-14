@@ -18,9 +18,7 @@ class WeatherDataViewModel: ViewModel() {
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     fun getWeather():LiveData<List<DailyWeatherInfo>> { return weather }
-
     private fun loadWeather(): MutableLiveData<List<DailyWeatherInfo>> { return repository.getWeatherDataFromAPI() }
-
     fun addWeatherToDatabase() {
         //cannot write to database from UI thread so must handle this operation via coroutine
       uiScope.launch(Dispatchers.IO) {
@@ -29,4 +27,10 @@ class WeatherDataViewModel: ViewModel() {
           }
       }
     }
+   var dailyWeather: DailyWeatherInfo? = null
+    set(dailyWeather){
+        field = dailyWeather
+    }
+
+
 }
