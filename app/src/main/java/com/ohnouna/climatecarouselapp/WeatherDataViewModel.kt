@@ -17,15 +17,12 @@ class WeatherDataViewModel: ViewModel() {
     private val viewModelJob = SupervisorJob()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    fun getWeather():LiveData<List<DailyWeatherInfo>> {
-        return weather
-    }
+    fun getWeather():LiveData<List<DailyWeatherInfo>> { return weather }
 
-    private fun loadWeather(): MutableLiveData<List<DailyWeatherInfo>> {
-           return repository.getWeatherDataFromAPI()
-    }
+    private fun loadWeather(): MutableLiveData<List<DailyWeatherInfo>> { return repository.getWeatherDataFromAPI() }
 
-  fun addWeatherToDatabase() {
+    fun addWeatherToDatabase() {
+        //cannot write to database from UI thread so must handle this operation via coroutine
       uiScope.launch(Dispatchers.IO) {
           for(item in weather.value!!) {
               repository.insertWeatherInfo(item)
