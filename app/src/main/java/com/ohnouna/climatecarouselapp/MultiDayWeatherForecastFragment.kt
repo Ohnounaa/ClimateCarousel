@@ -50,7 +50,7 @@ class MultiDayWeatherForecastFragment: Fragment() {
                         layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
                         adapter = WeatherAdapter(weatherInfo)
                         addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
-                    }x
+                    }
                 }
             }
         )
@@ -83,11 +83,21 @@ class MultiDayWeatherForecastFragment: Fragment() {
     }
 
    private inner class WeatherViewHolder(private val binding: WeatherViewHolderBinding): RecyclerView.ViewHolder(binding.root) {
+
+       init{
+           binding.weatherDataViewModel = WeatherDataViewModel()
+       }
+
+
        fun bind(weatherDay: DailyWeatherInfo) {
-           binding.date.text = weatherDay.dt.toString()
-           binding.avgDayTemp.text = weatherDay.temp.day.toString()
-           binding.avgNightTemp.text = weatherDay.temp.night.toString()
-           binding.realFeelTemperature.text = weatherDay.feels_like.day.toString()
+           binding.apply {
+               weatherDataViewModel?.w = weatherDay
+               date.text = weatherDay.dt.toString()
+               avgDayTemp.text = weatherDay.temp.day.toString()
+               avgNightTemp.text= weatherDay.temp.night.toString()
+               realFeelTemperature.text = weatherDay.feels_like.day.toString()
+               executePendingBindings()
+           }
 
            val imgUrl = "https://openweathermap.org/img/wn/$weatherDay.weather[0].icon@2x.png"
            picassoInstance

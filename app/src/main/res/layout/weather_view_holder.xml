@@ -6,8 +6,8 @@
 
     <data>
         <variable
-            name="dailyWeatherInfo"
-            type="com.ohnouna.climatecarouselapp.data.DailyWeatherInfo" />
+            name="weatherDataViewModel"
+            type="com.ohnouna.climatecarouselapp.WeatherDataViewModel" />
 </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +20,7 @@
     <TextView
         android:id="@+id/date"
         android:paddingEnd="5dp"
-        android:text="@{Integer.toString(dailyWeatherInfo.dt)}"
+        android:text="@{Integer.toString(weatherDataViewModel.w.dt)}"
         android:paddingStart="5dp"
         android:paddingTop="10dp"
         android:layout_width="wrap_content"
@@ -32,7 +32,7 @@
 
     <ImageView
         android:id="@+id/sky_description_icon"
-        android:src="@{dailyWeatherInfo.weather[0]}"
+
         android:layout_width="match_parent"
         android:foregroundGravity="center"
         android:layout_height="match_parent"
@@ -43,7 +43,7 @@
         android:id="@+id/real_feel_temperature"
         android:layout_width="wrap_content"
         android:padding="10dp"
-        android:text="@{Double.toString(dailyWeatherInfo.feels_like.day)}"
+        android:text="@{Double.toString(weatherDataViewModel.w.feels_like.day)}"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/date"
         app:layout_constraintLeft_toRightOf="@id/sky_description_icon"
@@ -53,6 +53,7 @@
     <TextView
         android:id="@+id/avg_day_temp"
         android:layout_width="wrap_content"
+        android:text = "@{Double.toString(weatherDataViewModel.w.temp.day)}"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toRightOf="@id/sky_description_icon"
         app:layout_constraintTop_toBottomOf="@id/real_feel_temperature"
@@ -64,14 +65,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="5dp"
-        android:text="@{Double.toString(dailyWeatherInfo.feels_like.day)}"
+        android:text="@{Double.toString(weatherDataViewModel.w.feels_like.day)}"
         android:paddingEnd="5dp"
         app:layout_constraintTop_toBottomOf="@id/real_feel_temperature"
         app:layout_constraintLeft_toRightOf="@id/avg_day_temp"
         android:textStyle="bold"
         android:textSize="18sp"/>
 
-    <Button
+    <!--<Button
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:text="@string/plus"
@@ -84,6 +85,6 @@
         android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/date"
         app:layout_constraintRight_toRightOf="parent"
-        android:gravity="center_horizontal" />
+        android:gravity="center_horizontal" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

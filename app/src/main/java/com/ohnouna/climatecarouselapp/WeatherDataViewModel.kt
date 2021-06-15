@@ -17,6 +17,8 @@ class WeatherDataViewModel: ViewModel() {
     private val viewModelJob = SupervisorJob()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
+    var w: DailyWeatherInfo?  = null
+
     fun getWeather():LiveData<List<DailyWeatherInfo>> { return weather }
     private fun loadWeather(): MutableLiveData<List<DailyWeatherInfo>> { return repository.getWeatherDataFromAPI() }
     fun addWeatherToDatabase() {
