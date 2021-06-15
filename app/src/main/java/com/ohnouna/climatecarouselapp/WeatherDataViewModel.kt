@@ -27,10 +27,5 @@ class WeatherDataViewModel: ViewModel() {
           }
       }
     }
-   var dailyWeather: DailyWeatherInfo? = null
-    set(dailyWeather){
-        field = dailyWeather
-    }
-
 
 }

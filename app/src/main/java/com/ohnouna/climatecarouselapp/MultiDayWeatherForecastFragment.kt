@@ -8,10 +8,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ohnouna.climatecarouselapp.data.DailyWeatherInfo
 import com.ohnouna.climatecarouselapp.databinding.WeatherViewHolderBinding
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.main_fragment.view.*
 
 class MultiDayWeatherForecastFragment: Fragment() {
@@ -22,6 +24,8 @@ class MultiDayWeatherForecastFragment: Fragment() {
         ViewModelProvider(requireActivity()).get(WeatherDataViewModel::class.java)
     }
 
+    private var picassoInstance: Picasso? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,7 +34,7 @@ class MultiDayWeatherForecastFragment: Fragment() {
 
         val binding:ViewDataBinding = DataBindingUtil.inflate(inflater, R.layout.main_fragment, container, false)
         fragmentLayout = binding.root
-
+        picassoInstance = Picasso.Builder(context).build()
 
         return fragmentLayout;
     }
@@ -41,21 +45,22 @@ class MultiDayWeatherForecastFragment: Fragment() {
             viewLifecycleOwner,
             { weatherInfo ->
                 writeWeatherDataToDatabase()
-                fragmentLayout.daily_weather_data_collection.apply{
+                fragmentLayout.daily_weather_data_collection.apply {
                     run {
                         layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
                         adapter = WeatherAdapter(weatherInfo)
-                    }
-
+                        addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
+                    }x
                 }
-
             }
         )
     }
     private fun writeWeatherDataToDatabase() { weatherDataViewModel.addWeatherToDatabase() }
 
     private inner class WeatherAdapter(private val weatherList: List<DailyWeatherInfo>?) : RecyclerView.Adapter<WeatherViewHolder>() {
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherViewHolder {
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
+                WeatherViewHolder {
             val binding = DataBindingUtil.inflate<ViewDataBinding>(
                 layoutInflater,
                 R.layout.weather_view_holder,
@@ -75,20 +80,21 @@ class MultiDayWeatherForecastFragment: Fragment() {
         override fun getItemCount(): Int {
            return weatherList?.size?:0
         }
-
     }
 
-   private inner class WeatherViewHolder(private val binding: WeatherViewHolderBinding):
-       RecyclerView.ViewHolder(binding.root) {
-
-           init{
-               binding.viewModel = weatherDataViewModel
-           }
-
+   private inner class WeatherViewHolder(private val binding: WeatherViewHolderBinding): RecyclerView.ViewHolder(binding.root) {
        fun bind(weatherDay: DailyWeatherInfo) {
-           binding.apply {
-               viewModel?.dailyWeather = weatherDay
-           }
+           binding.date.text = weatherDay.dt.toString()
+           binding.avgDayTemp.text = weatherDay.temp.day.toString()
+           binding.avgNightTemp.text = weatherDay.temp.night.toString()
+           binding.realFeelTemperature.text = weatherDay.feels_like.day.toString()
+
+           val imgUrl = "https://openweathermap.org/img/wn/$weatherDay.weather[0].icon@2x.png"
+           picassoInstance
+               ?.load(imgUrl)
+               ?.resize(250,250)
+               ?.centerCrop()
+               ?.into(binding.skyDescriptionIcon)
        }
 
    }
