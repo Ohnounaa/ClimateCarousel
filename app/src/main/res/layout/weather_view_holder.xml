@@ -29,13 +29,13 @@
         app:layout_constraintTop_toTopOf="parent"
         android:textStyle="bold"
         android:textSize="20sp"/>
-
     <TextView
         android:id="@+id/sky_description_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@{weatherDataViewModel.w.weather[0].description}"
         app:layout_constraintBottom_toBottomOf="@id/date"
+        android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@id/real_feel_temperature"
         app:layout_constraintStart_toStartOf="parent" />
     <ImageView
@@ -78,20 +78,5 @@
         app:layout_constraintLeft_toRightOf="@id/avg_day_temp"
         android:textStyle="bold"
         android:textSize="18sp"/>
-
-    <!--<Button
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:text="@string/plus"
-        android:layout_marginTop="3dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:id="@+id/more_button"
-        android:background="@drawable/ripple"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/date"
-        app:layout_constraintRight_toRightOf="parent"
-        android:gravity="center_horizontal" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
