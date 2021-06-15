@@ -1,5 +1,6 @@
 package com.ohnouna.climatecarouselapp
 
+
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,6 +8,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.ohnouna.climatecarouselapp.data.DailyWeatherInfo
 import kotlinx.coroutines.*
+import java.sql.Date
+import java.text.SimpleDateFormat
 
 class WeatherDataViewModel: ViewModel() {
 
@@ -29,5 +32,13 @@ class WeatherDataViewModel: ViewModel() {
           }
       }
     }
+
+    fun convertUnixToGregorianDate(unixDate: Int):String {
+        val calendarDate = Date(unixDate.toLong() * 1000)
+        val dateFormatter = SimpleDateFormat("EEEE, MMMM d, yyyy")
+        val d = dateFormatter.format(calendarDate)
+        return d.toString()
+    }
+
 
 }

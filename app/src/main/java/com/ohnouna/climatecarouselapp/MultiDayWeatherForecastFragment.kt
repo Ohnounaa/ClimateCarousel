@@ -92,10 +92,6 @@ class MultiDayWeatherForecastFragment: Fragment() {
        fun bind(weatherDay: DailyWeatherInfo) {
            binding.apply {
                weatherDataViewModel?.w = weatherDay
-               date.text = weatherDay.dt.toString()
-               avgDayTemp.text = weatherDay.temp.day.toString()
-               avgNightTemp.text= weatherDay.temp.night.toString()
-               realFeelTemperature.text = weatherDay.feels_like.day.toString()
                executePendingBindings()
            }
 
