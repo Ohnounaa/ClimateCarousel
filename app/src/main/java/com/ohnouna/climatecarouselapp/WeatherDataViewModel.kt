@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat
 fun loadImage(iv: ImageView, url: String) {
     Picasso
         .with(iv.context)
-        .load(url).centerCrop().resize(250, 250).into(iv)
+        .load(url).centerCrop().resize(200, 200).into(iv)
 }
 
 class WeatherDataViewModel: ViewModel() {
