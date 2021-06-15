@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ohnouna.climatecarouselapp.data.DailyWeatherInfo
 import com.ohnouna.climatecarouselapp.databinding.WeatherViewHolderBinding
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.main_fragment.view.*
 
 class MultiDayWeatherForecastFragment: Fragment() {
@@ -24,8 +23,6 @@ class MultiDayWeatherForecastFragment: Fragment() {
         ViewModelProvider(requireActivity()).get(WeatherDataViewModel::class.java)
     }
 
-    private var picassoInstance: Picasso? = null
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,7 +31,6 @@ class MultiDayWeatherForecastFragment: Fragment() {
 
         val binding:ViewDataBinding = DataBindingUtil.inflate(inflater, R.layout.main_fragment, container, false)
         fragmentLayout = binding.root
-        picassoInstance = Picasso.Builder(context).build()
 
         return fragmentLayout;
     }
@@ -84,24 +80,13 @@ class MultiDayWeatherForecastFragment: Fragment() {
 
    private inner class WeatherViewHolder(private val binding: WeatherViewHolderBinding): RecyclerView.ViewHolder(binding.root) {
 
-       init{
-           binding.weatherDataViewModel = WeatherDataViewModel()
-       }
-
+       init{ binding.weatherDataViewModel = WeatherDataViewModel() }
 
        fun bind(weatherDay: DailyWeatherInfo) {
            binding.apply {
                weatherDataViewModel?.w = weatherDay
                executePendingBindings()
            }
-
-           val imgUrl = "https://openweathermap.org/img/wn/$weatherDay.weather[0].icon@2x.png"
-           picassoInstance
-               ?.load(imgUrl)
-               ?.resize(250,250)
-               ?.centerCrop()
-               ?.into(binding.skyDescriptionIcon)
        }
-
    }
 }

@@ -2,20 +2,30 @@ package com.ohnouna.climatecarouselapp
 
 
 import android.util.Log
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.ohnouna.climatecarouselapp.data.DailyWeatherInfo
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.*
 import java.sql.Date
 import java.text.SimpleDateFormat
+
+
+@BindingAdapter("bind:imageUrl")
+fun loadImage(iv: ImageView, url: String) {
+    Picasso
+        .with(iv.context)
+        .load(url).centerCrop().resize(250, 250).into(iv)
+}
 
 class WeatherDataViewModel: ViewModel() {
 
 
     private val repository = WeatherDataRepository.retrieve()
-
     private val weather: MutableLiveData<List<DailyWeatherInfo>> = loadWeather()
     private val viewModelJob = SupervisorJob()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
@@ -39,6 +49,4 @@ class WeatherDataViewModel: ViewModel() {
         val d = dateFormatter.format(calendarDate)
         return d.toString()
     }
-
-
 }
