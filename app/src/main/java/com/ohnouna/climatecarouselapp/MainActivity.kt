@@ -2,19 +2,19 @@ package com.ohnouna.climatecarouselapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.FragmentActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val summaryFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
-        if(summaryFragment == null) {
-            val f = MultiDayWeatherForecastFragment()
-            supportFragmentManager.beginTransaction().add(R.id.fragment_container, f).commit()
+        val cityListFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+        if(cityListFragment == null) {
+            val f = CityListFragment()
+            supportFragmentManager.beginTransaction().add(R.id.fragment_container,f).commit()
         }
-
-
     }
+
+
 }

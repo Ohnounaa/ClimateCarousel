@@ -26,7 +26,7 @@ class WeatherDataRetriever {
         addConverterFactory(GsonConverterFactory.create())
             .build()
         val api: WeatherAPI = retrofit.create(WeatherAPI::class.java)
-        val retriever = api.retrieveWeatherData()
+        val retriever = api.retrieveWeatherDataForNewYork()
 
         retriever.enqueue(object: Callback<WeatherData> {
             override fun onResponse(
