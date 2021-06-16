@@ -8,9 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 import com.ohnouna.climatecarouselapp.data.DailyWeatherInfo
 import com.ohnouna.climatecarouselapp.databinding.WeatherViewHolderBinding
 import kotlinx.android.synthetic.main.main_fragment.view.*
@@ -27,11 +25,10 @@ class MultiDayWeatherForecastFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         val binding:ViewDataBinding = DataBindingUtil.inflate(inflater, R.layout.main_fragment, container, false)
         fragmentLayout = binding.root
-
         return fragmentLayout;
     }
 
@@ -45,7 +42,8 @@ class MultiDayWeatherForecastFragment: Fragment() {
                     run {
                         layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
                         adapter = WeatherAdapter(weatherInfo)
-                        addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
+                       addItemDecoration(CustomItemDecoration())
+                        PagerSnapHelper().attachToRecyclerView(this)
                     }
                 }
             }
