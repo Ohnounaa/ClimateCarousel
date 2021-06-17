@@ -7,70 +7,128 @@
             name="weatherDataViewModel"
             type="com.ohnouna.climatecarouselapp.WeatherViewModel" />
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <androidx.cardview.widget.CardView
+        android:layout_height="match_parent"
+        app:cardBackgroundColor="@color/daytimeBlue"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="5dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/weather_card"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:cardBackgroundColor="@color/lightGray"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/date"
-            android:padding="5dp"
-            android:text="@{weatherDataViewModel.convertUnixToGregorianDate(weatherDataViewModel.w.dt)}"
-            app:layout_constraintTop_toBottomOf="@id/weather_card"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:textSize="16sp"/>
-        <TextView
-            android:id="@+id/avg_day_temp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:text="@{Double.toString(weatherDataViewModel.w.temp.day) + `°`}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:textStyle="bold"
-            android:textSize="20sp"/>
-      <!--  <TextView
-            android:id="@+id/real_feel_temperature"
-            android:layout_width="wrap_content"
-            android:padding="5dp"
-            android:text = "@{`Feels Like `+ Double.toString(weatherDataViewModel.w.feels_like.day) + `°`}"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/avg_day_temp"
-            android:textStyle="bold"
-            android:textSize="18sp"/>
-        <ImageView
-            android:id="@+id/sky_description_icon"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:imageUrl="@{`https://openweathermap.org/img/wn/` + weatherDataViewModel.w.weather[0].icon + `@2x.png`}"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    <TextView
-        android:id="@+id/avg_night_temp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="5dp"
-        android:text="@{Double.toString(weatherDataViewModel.w.feels_like.day) + `°`}"
-        android:paddingEnd="5dp"
-        app:layout_constraintTop_toBottomOf="@id/real_feel_temperature"
-        app:layout_constraintLeft_toRightOf="@id/avg_day_temp"
-        android:textStyle="bold"
-        android:textSize="18sp"/>-->
-</androidx.cardview.widget.CardView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{weatherDataViewModel.convertUnixToGregorianDate(weatherDataViewModel.w.dt)}"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:padding="5dp"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="@id/weather_card"
+                app:layout_constraintTop_toTopOf="@id/weather_card" />
+            <TextView
+                android:id="@+id/avg_day_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{Double.toString(weatherDataViewModel.w.temp.day) + `°`}"
+                android:textSize="18sp"
+                android:padding="5dp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/date"
+                app:layout_constraintLeft_toLeftOf="@id/weather_card" />
+            <TextView
+                android:id="@+id/real_feel_temperature"
+                android:layout_width="wrap_content"
+                android:padding="5dp"
+                android:text = "@{`Feels Like `+ Double.toString(weatherDataViewModel.w.feels_like.day) + `°`}"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="@id/weather_card"
+                app:layout_constraintTop_toBottomOf="@id/avg_day_temp"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:id="@+id/sky_description"
+                app:layout_constraintLeft_toLeftOf="@id/weather_card"
+                app:layout_constraintTop_toBottomOf="@id/real_feel_temperature"
+                android:text="@{weatherDataViewModel.w.weather[0].description}"/>
+
+            <ImageView
+                android:id="@+id/sky_description_icon"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:imageUrl="@{`https://openweathermap.org/img/wn/` + weatherDataViewModel.w.weather[0].icon + `@2x.png`}"
+                app:layout_constraintRight_toRightOf="@id/weather_card"
+                app:layout_constraintTop_toTopOf="@id/weather_card" />
+            <TextView
+                android:id="@+id/avg_morn_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/yellow"
+                android:text="@{`Morning Temp: `+ Double.toString(weatherDataViewModel.w.temp.morn) + `°`}"
+                android:padding="5dp"
+                app:layout_constraintTop_toBottomOf="@id/sky_description"
+                app:layout_constraintLeft_toLeftOf="@id/weather_card"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/avg_afternoon_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/afternoonOrange"
+                android:padding="5dp"
+                android:text="@{`Afternoon Temp: `+ Double.toString(weatherDataViewModel.w.temp.day) + `°`}"
+                app:layout_constraintTop_toBottomOf="@id/avg_morn_temp"
+                app:layout_constraintLeft_toLeftOf="@id/weather_card"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/avg_night_temp"
+                android:padding="5dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{`Night Temp: `+ Double.toString(weatherDataViewModel.w.temp.night) + `°`}"
+                app:layout_constraintTop_toBottomOf="@id/avg_afternoon_temp"
+                app:layout_constraintLeft_toLeftOf="@id/weather_card"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/max_temp"
+                android:padding="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{`Maximum Temp: `+ Double.toString(weatherDataViewModel.w.temp.max) + `°`}"
+                app:layout_constraintTop_toBottomOf="@id/avg_night_temp"
+                app:layout_constraintLeft_toLeftOf="@id/weather_card"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/min_temp"
+                android:padding="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{`Minimum Temp: `+ Double.toString(weatherDataViewModel.w.temp.min) + `°`}"
+                app:layout_constraintTop_toBottomOf="@id/max_temp"
+                app:layout_constraintLeft_toLeftOf="@id/weather_card"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                app:layout_constraintTop_toBottomOf="@id/min_temp"
+                app:layout_constraintLeft_toLeftOf="@id/weather_card"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:text="@{`% Humidity: `+ Double.toString(weatherDataViewModel.w.humidity)}"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 </layout>
