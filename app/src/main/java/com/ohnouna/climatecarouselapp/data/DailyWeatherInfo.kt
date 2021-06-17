@@ -9,7 +9,7 @@ import java.util.UUID.randomUUID
 
 @Entity
 data class DailyWeatherInfo (
-    @PrimaryKey val uuid: UUID? = randomUUID(),
+    @PrimaryKey val uuid: UUID = randomUUID(),
     val clouds: Int,
     val deg: Int,
     val dt: Int,
