@@ -20,7 +20,7 @@ fun loadImage(iv: ImageView, url: String) {
         .load(url).centerCrop().resize(200, 200).into(iv)
 }
 
-class WeatherDataViewModel: ViewModel() {
+class SharedCityWeatherViewModel: ViewModel() {
     var w: DailyWeatherInfo?  = null
     val selectedCity = MutableLiveData<String>()
 
@@ -30,7 +30,7 @@ class WeatherDataViewModel: ViewModel() {
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     fun getWeather():LiveData<List<DailyWeatherInfo>> { return weather }
-    private fun loadWeather(city: String): MutableLiveData<List<DailyWeatherInfo>> { return repository.getWeatherDataFromAPI(city) }
+    private fun loadWeather(): MutableLiveData<List<DailyWeatherInfo>> { return repository.getWeatherDataFromAPI() }
     fun addWeatherToDatabase() {
         //cannot write to database from UI thread so must handle this operation via coroutine
       uiScope.launch(Dispatchers.IO) {

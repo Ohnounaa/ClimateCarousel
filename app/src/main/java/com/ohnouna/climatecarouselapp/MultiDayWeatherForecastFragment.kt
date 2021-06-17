@@ -12,14 +12,13 @@ import androidx.recyclerview.widget.*
 import com.ohnouna.climatecarouselapp.data.DailyWeatherInfo
 import com.ohnouna.climatecarouselapp.databinding.WeatherViewHolderBinding
 import kotlinx.android.synthetic.main.city_detail_fragment.view.*
-import kotlinx.android.synthetic.main.city_list_fragment.view.*
 
 class MultiDayWeatherForecastFragment: Fragment() {
 
 
     lateinit var fragmentLayout: View
-    private val weatherDataViewModel:WeatherDataViewModel by lazy {
-        ViewModelProvider(requireActivity()).get(WeatherDataViewModel::class.java)
+    private val sharedCityWeatherViewModel:SharedCityWeatherViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(SharedCityWeatherViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -38,7 +37,7 @@ class MultiDayWeatherForecastFragment: Fragment() {
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        weatherDataViewModel.getWeather().observe(
+        sharedCityWeatherViewModel.getWeather().observe(
             viewLifecycleOwner,
             { weatherInfo ->
                 writeWeatherDataToDatabase()
@@ -53,7 +52,7 @@ class MultiDayWeatherForecastFragment: Fragment() {
             }
         )
     }
-    private fun writeWeatherDataToDatabase() { weatherDataViewModel.addWeatherToDatabase() }
+    private fun writeWeatherDataToDatabase() { sharedCityWeatherViewModel.addWeatherToDatabase() }
 
     private inner class WeatherAdapter(private val weatherList: List<DailyWeatherInfo>?) : RecyclerView.Adapter<WeatherViewHolder>() {
 
@@ -82,7 +81,7 @@ class MultiDayWeatherForecastFragment: Fragment() {
 
    private inner class WeatherViewHolder(private val binding: WeatherViewHolderBinding): RecyclerView.ViewHolder(binding.root) {
 
-       init{ binding.weatherDataViewModel = WeatherDataViewModel() }
+       init{ binding.weatherDataViewModel = SharedCityWeatherViewModel() }
 
        fun bind(weatherDay: DailyWeatherInfo) {
            binding.apply {

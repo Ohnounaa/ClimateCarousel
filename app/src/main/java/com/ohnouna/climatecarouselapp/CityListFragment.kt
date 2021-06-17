@@ -1,6 +1,5 @@
 package com.ohnouna.climatecarouselapp
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,16 +16,6 @@ class CityListFragment: Fragment() {
 
     lateinit var fragmentLayout: View
     var listOfCities: ArrayList<String> = ArrayList()
-    interface Callbacks{
-        fun onCitySelected(city: String) {}
-    }
-
-
-    fun onCitySelected() {
-
-    }
-
-    private var callbacks: Callbacks? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,29 +38,17 @@ class CityListFragment: Fragment() {
         return fragmentLayout;
     }
 
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        callbacks = context as Callbacks?
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        callbacks = null
-    }
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fragmentLayout.city_collection.apply {
             run {
                 layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-                adapter = CityListAdapter(listOfCities, callbacks)
+                adapter = CityListAdapter(listOfCities)
             }
         }
     }
 
-    inner class CityListAdapter(private val cityList: ArrayList<String>, callbacks: Callbacks?):
+    inner class CityListAdapter(private val cityList: ArrayList<String>):
         RecyclerView.Adapter<CityViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CityViewHolder {
             val binding = DataBindingUtil.inflate<ViewDataBinding>(
