@@ -1,12 +1,10 @@
 package com.ohnouna.climatecarouselapp
 
 
-import android.util.Log
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.ohnouna.climatecarouselapp.data.DailyWeatherInfo
 import com.squareup.picasso.Picasso
@@ -23,17 +21,16 @@ fun loadImage(iv: ImageView, url: String) {
 }
 
 class WeatherDataViewModel: ViewModel() {
-
+    var w: DailyWeatherInfo?  = null
+    val selectedCity = MutableLiveData<String>()
 
     private val repository = WeatherDataRepository.retrieve()
     private val weather: MutableLiveData<List<DailyWeatherInfo>> = loadWeather()
     private val viewModelJob = SupervisorJob()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    var w: DailyWeatherInfo?  = null
-
     fun getWeather():LiveData<List<DailyWeatherInfo>> { return weather }
-    private fun loadWeather(): MutableLiveData<List<DailyWeatherInfo>> { return repository.getWeatherDataFromAPI() }
+    private fun loadWeather(city: String): MutableLiveData<List<DailyWeatherInfo>> { return repository.getWeatherDataFromAPI(city) }
     fun addWeatherToDatabase() {
         //cannot write to database from UI thread so must handle this operation via coroutine
       uiScope.launch(Dispatchers.IO) {
@@ -41,6 +38,10 @@ class WeatherDataViewModel: ViewModel() {
               repository.insertWeatherInfo(item)
           }
       }
+    }
+
+    fun selectedCity(city: String) {
+        selectedCity.value = city
     }
 
     fun convertUnixToGregorianDate(unixDate: Int):String {

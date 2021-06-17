@@ -5,7 +5,7 @@
     <data>
         <variable
             name="weatherDataViewModel"
-            type="com.ohnouna.climatecarouselapp.WeatherDataViewModel" />
+            type="com.ohnouna.climatecarouselapp.SharedCityWeatherViewModel" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
