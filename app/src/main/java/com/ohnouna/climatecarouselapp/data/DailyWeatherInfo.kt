@@ -4,12 +4,15 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.ohnouna.climatecarouselapp.database.WeatherTypeConverters
+import java.util.*
+import java.util.UUID.randomUUID
 
 @Entity
 data class DailyWeatherInfo (
+    @PrimaryKey val uuid: UUID? = randomUUID(),
     val clouds: Int,
     val deg: Int,
-    @PrimaryKey val dt: Int,
+    val dt: Int,
     @TypeConverters(WeatherTypeConverters::class)
     val feels_like: FeelsLike,
     val gust: Double,

@@ -9,8 +9,8 @@ import com.ohnouna.climatecarouselapp.database.WeatherDatabase
 
 class WeatherDataRepository private constructor(context: Context){
 
-    fun getWeatherDataFromAPI(): MutableLiveData<List<DailyWeatherInfo>> {
-        return WeatherDataRetriever().retrieveWeatherData();
+    fun getWeatherDataFromAPI(city: String): MutableLiveData<List<DailyWeatherInfo>> {
+        return WeatherDataRetriever().retrieveWeatherData(city);
     }
 
 

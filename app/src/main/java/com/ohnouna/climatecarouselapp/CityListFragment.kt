@@ -1,18 +1,24 @@
 package com.ohnouna.climatecarouselapp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ohnouna.climatecarouselapp.databinding.CityListFragmentViewholderBinding
 import kotlinx.android.synthetic.main.city_list_fragment.view.*
 
 class CityListFragment: Fragment() {
+
+    private val cityViewModel:CityViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(CityViewModel::class.java)
+    }
 
     lateinit var fragmentLayout: View
     var listOfCities: ArrayList<String> = ArrayList()
@@ -79,6 +85,10 @@ class CityListFragment: Fragment() {
         fun bind(city:String){
             binding.apply {
                 cityName.text = city
+                moreButton.setOnClickListener {
+                    Log.d("CITY", city)
+                        cityViewModel.onCitySelected(city)
+                }
             }
         }
     }

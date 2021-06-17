@@ -17,8 +17,8 @@ class MultiDayWeatherForecastFragment: Fragment() {
 
 
     lateinit var fragmentLayout: View
-    private val sharedCityWeatherViewModel:SharedCityWeatherViewModel by lazy {
-        ViewModelProvider(requireActivity()).get(SharedCityWeatherViewModel::class.java)
+    private val weatherViewModel:WeatherViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(WeatherViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -37,10 +37,12 @@ class MultiDayWeatherForecastFragment: Fragment() {
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sharedCityWeatherViewModel.getWeather().observe(
+            val cityName = arguments?.getString("CITY") as String
+
+        weatherViewModel.getWeather(cityName)?.observe(
             viewLifecycleOwner,
             { weatherInfo ->
-                writeWeatherDataToDatabase()
+                //writeWeatherDataToDatabase()
                 fragmentLayout.daily_weather_data_collection.apply {
                     run {
                         layoutManager = ScalingLinearLayoutManager(context)
@@ -52,7 +54,7 @@ class MultiDayWeatherForecastFragment: Fragment() {
             }
         )
     }
-    private fun writeWeatherDataToDatabase() { sharedCityWeatherViewModel.addWeatherToDatabase() }
+    private fun writeWeatherDataToDatabase() { weatherViewModel.addWeatherToDatabase() }
 
     private inner class WeatherAdapter(private val weatherList: List<DailyWeatherInfo>?) : RecyclerView.Adapter<WeatherViewHolder>() {
 
@@ -81,7 +83,7 @@ class MultiDayWeatherForecastFragment: Fragment() {
 
    private inner class WeatherViewHolder(private val binding: WeatherViewHolderBinding): RecyclerView.ViewHolder(binding.root) {
 
-       init{ binding.weatherDataViewModel = SharedCityWeatherViewModel() }
+       init{ binding.weatherDataViewModel = WeatherViewModel() }
 
        fun bind(weatherDay: DailyWeatherInfo) {
            binding.apply {
@@ -90,4 +92,11 @@ class MultiDayWeatherForecastFragment: Fragment() {
            }
        }
    }
+
+    companion object {
+        fun newInstance(city: String?) :MultiDayWeatherForecastFragment{
+            val args = Bundle().apply{ putString("CITY", city) }
+            return MultiDayWeatherForecastFragment().apply {  arguments = args }
+        }
+    }
 }
