@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">ClimateCarouselApp</string>
     <string name="plus">+</string>
+    <string name="_16_day_weather_forecast_for">16 DAY WEATHER FORECAST FOR </string>
 </resources>

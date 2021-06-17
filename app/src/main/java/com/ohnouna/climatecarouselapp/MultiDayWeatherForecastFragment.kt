@@ -4,14 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.*
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.ohnouna.climatecarouselapp.data.DailyWeatherInfo
 import com.ohnouna.climatecarouselapp.databinding.WeatherViewHolderBinding
-import kotlinx.android.synthetic.main.city_detail_fragment.view.*
+import kotlinx.android.synthetic.main.city_weather_detail_fragment.view.*
 
 class MultiDayWeatherForecastFragment: Fragment() {
 
@@ -28,7 +30,7 @@ class MultiDayWeatherForecastFragment: Fragment() {
     ): View {
 
         val binding:ViewDataBinding = DataBindingUtil.inflate(inflater,
-            R.layout.city_detail_fragment,
+            R.layout.city_weather_detail_fragment,
             container,
             false)
         fragmentLayout = binding.root
@@ -39,10 +41,11 @@ class MultiDayWeatherForecastFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
             val cityName = arguments?.getString("CITY") as String
 
+            fragmentLayout.findViewById<TextView>(R.id.detail_view_title).text = cityName
         weatherViewModel.getWeather(cityName)?.observe(
             viewLifecycleOwner,
             { weatherInfo ->
-                //writeWeatherDataToDatabase()
+                writeWeatherDataToDatabase()
                 fragmentLayout.daily_weather_data_collection.apply {
                     run {
                         layoutManager = ScalingLinearLayoutManager(context)
