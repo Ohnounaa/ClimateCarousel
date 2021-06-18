@@ -41,7 +41,7 @@ class MultiDayWeatherForecastFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
             val cityName = arguments?.getString("CITY") as String
 
-            fragmentLayout.findViewById<TextView>(R.id.detail_view_title).text = cityName
+            fragmentLayout.findViewById<TextView>(R.id.detail_view_title).text =  "16 DAY WEATHER FORECAST FOR" + cityName
         weatherViewModel.getWeather(cityName)?.observe(
             viewLifecycleOwner,
             { weatherInfo ->

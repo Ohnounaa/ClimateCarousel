@@ -8,14 +8,14 @@
 
     <TextView
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="20dp"
         app:layout_constraintRight_toRightOf="parent"
         android:id="@+id/detail_view_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:text="@string/_16_day_weather_forecast_for"/>
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/daily_weather_data_collection"

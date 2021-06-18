@@ -13,11 +13,10 @@ class WeatherDataRepository private constructor(context: Context){
         return WeatherDataRetriever().retrieveWeatherData(city);
     }
 
-
     private val database: WeatherDatabase = Room.databaseBuilder(
         context.applicationContext,
         WeatherDatabase::class.java,
-        "weather-database").build()
+        "weather-database").fallbackToDestructiveMigration().build()
 
     private val weatherDao = database.dailyWeatherDao()
 

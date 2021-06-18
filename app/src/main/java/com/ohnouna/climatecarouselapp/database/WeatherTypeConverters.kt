@@ -18,7 +18,7 @@ class WeatherTypeConverters {
     }
 
     @TypeConverter
-    fun fromStringtoFeelsLike(feelsLikeString: String): FeelsLike? {
+    fun fromStringtoFeelsLike(feelsLikeString: String): FeelsLike {
         val arrayList = feelsLikeString.split(",", ignoreCase = true, limit = 0)
         return FeelsLike(
             arrayList[0].toDouble(),
@@ -41,7 +41,7 @@ class WeatherTypeConverters {
     }
 
     @TypeConverter
-    fun fromStringToTemp(tempAsString: String): Temp? {
+    fun fromStringToTemp(tempAsString: String): Temp {
         var arrayList = tempAsString.split(",", ignoreCase = true, limit = 0)
         return Temp(
             arrayList[0].toDouble(),
@@ -54,19 +54,19 @@ class WeatherTypeConverters {
     }
 
     @TypeConverter
-    fun fromUUIDToString(uuid: UUID): String? {
-        return uuid?.toString()
+    fun fromUUIDToString(uuid: UUID): String {
+        return uuid.toString()
     }
 
     @TypeConverter
-    fun fromWeatherResponseToString(weatherResponse: kotlin.collections.MutableList<WeatherResponse>): String {
+    fun fromWeatherResponseToString(weatherResponse: MutableList<WeatherResponse>): String {
         val sb = StringBuilder()
         //only ever 1 entry in list
-        val relevantResponse:WeatherResponse? = weatherResponse.first()
-        sb.append(relevantResponse?.description + ", ")
-        sb.append(relevantResponse?.icon + ", ")
-        sb.append(relevantResponse?.id.toString() + ", ")
-        sb.append(relevantResponse?.main + ", ")
+        val relevantResponse: WeatherResponse = weatherResponse.first()
+        sb.append(relevantResponse.description + ", ")
+        sb.append(relevantResponse.icon + ", ")
+        sb.append(relevantResponse.id.toString() + ", ")
+        sb.append(relevantResponse.main + ", ")
         return sb.toString()
     }
 
@@ -81,7 +81,7 @@ class WeatherTypeConverters {
     }
 
     @TypeConverter
-    fun fromStringToUUID(uuid: String): UUID? {
+    fun fromStringToUUID(uuid: String): UUID {
         return UUID.fromString(uuid)
     }
 }
