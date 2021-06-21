@@ -1,2 +1,2 @@
-ClimateCarousel
+ClimateCarousel:
 This project displays weather data for different cities. It makes a request using Retrofit to the OpenWeatherAPI, and displays the forecast for the next 16 days for that city in the detail view. The weather forecast is displayed in a Recyclver View. The app uses MVVM architecture, data binding, and the Room library to write the API data to a database so users can access info even when they are offline.  
