@@ -29,11 +29,14 @@ class CityListFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        listOfCities.add("New York")
-        listOfCities.add("Taipei")
-        listOfCities.add("Rome")
-        listOfCities.add("London")
-        listOfCities.add("Paris")
+        if(listOfCities.size == 0) {
+            listOfCities.add("New York")
+            listOfCities.add("Taipei")
+            listOfCities.add("Rome")
+            listOfCities.add("London")
+            listOfCities.add("Paris")
+        }
+
 
 
         val binding: ViewDataBinding = DataBindingUtil.inflate(inflater,
